@@ -1,0 +1,72 @@
+.flex
+{
+    background-color: #2D3748;
+    height: 100%;
+    align-items: center;
+    flex-direction: column;
+}
+
+.Text-Title
+{
+    font-weight: bold;
+    margin-top: 0px;
+    font-size: 35px;
+}
+
+.Text-Timer
+{
+    margin-top: 0px;
+
+    font-weight: bold;
+    font-size: 4.5rem;
+}
+
+.Pause
+{
+    width: 7rem;
+    background-color: tomato;
+    color: white;
+}
+
+.Play
+{
+    width: 7rem;
+    background-color: #68D391;
+    color: white;
+}
+
+.timesFlex
+{
+    margin-top: 10px;
+}
+
+.times{
+    background-color: #68c6d3;
+    color: white;
+    margin: 3px;
+}
+
+.reset{
+    width: 7rem;
+    background-color: #63B3ED;
+}
+
+.Play:hover {
+    filter: drop-shadow(0 0 2em #747bff);
+  }
+  
+.times:hover {
+    filter: drop-shadow(0 0 2em #2f5d90);
+  }
+  
+.hidden{
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 2s, opacity 0.3s linear;
+}
+
+.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s linear;
+  }
