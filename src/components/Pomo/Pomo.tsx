@@ -1,15 +1,22 @@
 // src/App.tsx
-import { Component, createEffect, createSignal } from "solid-js";
+import { Component, createEffect, createSignal, Show } from "solid-js";
 import { sendNotification } from "@tauri-apps/api/notification";
 import { ask } from "@tauri-apps/api/dialog";
 import { appWindow } from '@tauri-apps/api/window'
 import "./Pomo.css";
 
-const Pomo: Component = () => {
+interface PomoProps {
+  active: boolean;
+}
+
+const Pomo: Component<PomoProps> = (props) => {
   const [time, setTime] = createSignal(0);
   const [timerStart, setTimerStart] = createSignal(false);
   const [pause, setPause] = createSignal(false);
   const [hideTimers, setHideTimers] = createSignal(false);
+  const pomoDisplayStyle = () => {
+    return props.active ? { display: "block" } : { display: "none" };
+  };
   const buttons = [
     {
       value: 300,
@@ -40,7 +47,7 @@ const Pomo: Component = () => {
     setTimerStart(!timerStart());
     setPause(!pause());
     setHideTimers(true);
-    appWindow.startDragging();
+    appWindow.center();
   };
   const triggerResetDialog = async () => {
       let shouldReset = await ask("Annuler le Chrono ?", {
@@ -73,7 +80,7 @@ const Pomo: Component = () => {
   });
 
   return (
-    <div class="Pomo" style={{ height: "100%" }} data-tauri-drag-region>
+    <div class="Pomo" style={{ height: "100%" , ...pomoDisplayStyle()}} data-tauri-drag-region>
       <div data-tauri-drag-region>
         <p class="Text-Title" data-tauri-drag-region>
           Discipline

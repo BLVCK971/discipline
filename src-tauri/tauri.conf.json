@@ -24,7 +24,8 @@
         "all": true
       },
       "window": {
-        "startDragging": true
+        "startDragging": true,
+        "close":true
       }
     },
     "bundle": {
@@ -51,7 +52,7 @@
         "resizable": false,
         "title": "Discipline",
         "width": 400,
-        "height": 320,
+        "height": 370,
         "focus": true,
         "decorations": false,
         "alwaysOnTop": true,

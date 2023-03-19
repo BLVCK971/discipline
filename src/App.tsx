@@ -1,36 +1,41 @@
-import { createSignal } from "solid-js";
+import { createSignal, Show } from "solid-js";
 import logo from "./assets/logo.svg";
 import { invoke } from "@tauri-apps/api/tauri";
 import "./App.css";
 import Pomo from "./components/Pomo/Pomo";
-import { appWindow } from '@tauri-apps/api/window';
+import ToDo from "./components/TodoList/ToDo";
+import { appWindow,getCurrent  } from "@tauri-apps/api/window";
 
-
-function handleClick(event: MouseEvent) {
-  console.log(event.target);
-  appWindow.startDragging();
-}
 
 function App() {
-  const [greetMsg, setGreetMsg] = createSignal("");
   const [name, setName] = createSignal("");
-
-
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    setGreetMsg(await invoke("greet", { name: name() }));
-  }
-
+  const [activeView, setActiveView] = createSignal("chrono");
+  const handleClose = async () => {
+    const window = await getCurrent();
+    window.close();
+  };
   
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener("DOMContentLoaded", () => {
     // This will wait for the window to load, but you could
     // run this function on whatever trigger you want
-    invoke('close_splashscreen')
-  })
+    invoke("close_splashscreen");
+  });
 
   return (
-    <div class="Container" onclick={handleClick} data-tauri-drag-region>
-      <Pomo />
+    <div class="Container" data-tauri-drag-region>
+      <button className="close-button" onClick={handleClose}></button>
+
+      <ToDo active={activeView() === "todo"}  />
+      <Pomo active={activeView() === "chrono"} />
+
+      <div class="navbar" data-tauri-drag-region>
+        <button class="navbar-button" onClick={() => setActiveView("todo")}>
+          TODO
+        </button>
+        <button class="navbar-button" onClick={() => setActiveView("chrono")}>
+          Chrono
+        </button>
+      </div>
     </div>
   );
 }
